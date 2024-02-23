@@ -1,4 +1,5 @@
 class BlogPostsController < ApplicationController
+    before_action :authenticate_user!, except: [:index, :show]
     before_action :set_blog_post, except: [:index,:new,:create] #only: [:show,:edit,:update,:destroy]
 
     def index
@@ -7,9 +8,6 @@ class BlogPostsController < ApplicationController
 
     # get a specific blog
     def show 
-        # @blog_post = BlogPost.find(params[:id])
-        # redirect the request
-        
     end
 
     # gives the form in view
@@ -53,6 +51,7 @@ class BlogPostsController < ApplicationController
 
     def set_blog_post
         @blog_post = BlogPost.find(params[:id])
+        # redirect the request
         rescue ActiveRecord::RecordNotFound
             redirect_to root_path
     end
