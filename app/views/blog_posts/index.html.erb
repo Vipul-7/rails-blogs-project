@@ -2,5 +2,12 @@
 
 <% @blog_posts.each do |blog_post|%>
     <h2 class="text-sm text-red-600 mb-0"><%= link_to blog_post.title , "#{blog_post_path(blog_post)}" %></h2>
+    <% if blog_post.draft? %>
+        <div class="p-1 bg-gray-100 rounded">Draft</div>
+    <%end%>    
+    <% if blog_post.schedule? %>
+        <div class="p-1 bg-blue-100 rounded">Scheduled</div>
+    <%end%>    
+
     <p><%= blog_post.body%></p>
 <% end %>
