@@ -1,13 +1,20 @@
 class BlogPostsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show] 
-    before_action :set_blog_post, except: [:index,:new,:create] #only: [:show,:edit,:update,:destroy]
+    before_action :set_blog_post, except: [:index,:new,:create,:my_posts] #only: [:show,:edit,:update,:destroy]
 
     def index
-        @blog_posts = user_signed_in? ? BlogPost.sorted :  BlogPost.published.sorted
+        # @blog_posts = user_signed_in? ? BlogPost.where(creator_id: current_user.id)
+        # .or(BlogPost.published)
+        # .sorted :  BlogPost.published.sorted
+        @blog_posts = BlogPost.published.sorted
     end
 
     # get a specific blog
     def show 
+    end
+
+    def my_posts
+        @blog_posts = BlogPost.where(creator_id: current_user.id).sorted
     end
 
     # gives the form in view
@@ -18,6 +25,8 @@ class BlogPostsController < ApplicationController
     # post request to store in db
     def create
         @blog_post = BlogPost.new(blog_post_params)
+        @blog_post.creator_id = current_user.id
+
         if @blog_post.save
             redirect_to @blog_post
         else
@@ -51,6 +60,7 @@ class BlogPostsController < ApplicationController
 
     def set_blog_post
         @blog_post = user_signed_in? ? BlogPost.find(params[:id]) :BlogPost.published.find(params[:id])
+        # @blog_post = user_signed_in? ? BlogPost.where(creator_id: current_user.id).find(params[:id]) :BlogPost.published.find(params[:id])
 
         # redirect the request
         rescue ActiveRecord::RecordNotFound

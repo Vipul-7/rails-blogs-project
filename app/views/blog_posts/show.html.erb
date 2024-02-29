@@ -1,3 +1,6 @@
- <%= link_to "Edit", edit_blog_post_path(@blog_post) if user_signed_in? %>
- <h1><%= @blog_post.title %></h1>
- <%= @blog_post.body %>
+<% if user_signed_in? && current_user.id == @blog_post.creator_id %>
+  <%= link_to "Edit", edit_blog_post_path(@blog_post) %>
+<% end %>
+
+<h1><%= @blog_post.title %></h1>
+<%= @blog_post.body %>
