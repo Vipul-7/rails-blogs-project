@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
+
 
 @layer components {
   .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+    @apply bg-gray-200 py-1 px-2 rounded;
   }
 }
 
-*/
+
+@import 'actiontext.css';

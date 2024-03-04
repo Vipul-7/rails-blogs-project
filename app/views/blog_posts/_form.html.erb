@@ -12,8 +12,8 @@
         <%= form.text_field :title %>
     </div>
     <div  class="mb-5 flex flex-col">
-        <%= form.label :body %>
-        <%= form.text_area :body %>
+        <%= form.label :content %>
+        <%= form.rich_text_area :content %>
     </div>
 
     <div class="mb-5">
@@ -21,5 +21,5 @@
         <%= form.datetime_select :published_at, include_blank: true%>
     </div>
 
-    <%= form.button %>
+    <%= form.button :submit ,class: "btn-primary"%>
 <%end%>
