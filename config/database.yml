@@ -16,6 +16,6 @@ test:
 
 production:
   <<: *default
-  database: blog
-  username: your_production_username
-  password: your_production_password
+  database: blogs_yyvg
+  username: blogs_yyvg_user
+  password: PEepAC9OxBHQjevtjGKUfqmMCoOqLnvY
