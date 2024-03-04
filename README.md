@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version - 3.2.1
 
-Things you may want to cover:
+# Run on local
 
-* Ruby version
+- Install ruby using rvm on your local machine
+- Install rails using gem on your local machine
+- Install postgresql on your local machine
 
-* System dependencies
+- Clone the repository
+- Run `bundle install` to install all the dependencies
+- [database.yml](config/database.yml) is configured to use postgresql, enter your postgresql username and password
+- Run `rails db:create` to create the database
+- Run `rails db:migrate` to run the migrations
+- Run `bin/dev` to start the server 
+- Open `http://localhost:3000` in your browser
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Note :- I didn't more focus on UI, I just focused on the functionality of the application.

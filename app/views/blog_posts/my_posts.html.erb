@@ -1,11 +1,40 @@
-<% @blog_posts.each do |blog_post|%>
+<div class="flex justify-end items-center">
+    <span class="mr-2">Filter:</span>
+    <select id="filter-select">
+        <option value="all" <%= params[:filter] == 'all' ? 'selected' : '' %>>All</option>
+        <option value="drafts" <%= params[:filter] == 'drafts' ? 'selected' : '' %>>Drafts</option>
+        <option value="published" <%= params[:filter] == 'published' ? 'selected' : '' %>>Published</option>
+        <option value="scheduled" <%= params[:filter] == 'scheduled' ? 'selected' : '' %>>Scheduled</option>
+    </select>
+</div>
+
+<% filtered_posts = @blog_posts %>
+<% case params[:filter]
+    when "all"
+     filtered_posts = filtered_posts
+   when "drafts"
+     filtered_posts = filtered_posts.select { |post| post.draft? }
+   when "published"
+     filtered_posts = filtered_posts.select { |post| post.published? }
+   when "scheduled"
+     filtered_posts = filtered_posts.select { |post| post.scheduled? }
+   end %>
+
+<% filtered_posts.each do |blog_post| %>
     <h2 class="text-sm text-red-600 mb-0"><%= link_to blog_post.title , "#{blog_post_path(blog_post)}" %></h2>
     <% if blog_post.draft? %>
         <div class="p-1 bg-gray-100 rounded">Draft</div>
-    <%end%>    
-    <% if blog_post.scheduled? %>
+    <% elsif blog_post.scheduled? %>
         <div class="p-1 bg-blue-100 rounded">Scheduled</div>
-    <%end%>    
-
-    <p><%= blog_post.body%></p>
+    <% end %>
+    <p><%= blog_post.body %></p>
 <% end %>
+
+<script>
+    document.getElementById("filter-select").addEventListener("change", function(){
+        var filter = this.value;
+        var url = new URL(window.location.href);
+        url.searchParams.set("filter", filter);
+        window.location.href = url;
+    });
+</script>

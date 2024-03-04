@@ -1,6 +1,6 @@
 class BlogPostsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show] 
-    before_action :set_blog_post, except: [:index,:new,:create,:my_posts] #only: [:show,:edit,:update,:destroy]
+    before_action :set_blog_post, only: [:show,:update,:destroy]
 
     def index
         # @blog_posts = user_signed_in? ? BlogPost.where(creator_id: current_user.id)
@@ -35,7 +35,10 @@ class BlogPostsController < ApplicationController
     end
 
     def edit
-        # @blog_post = BlogPost.find(params[:id])
+        @blog_post = BlogPost.find(params[:id])
+        if @blog_post.creator_id != current_user.id
+            redirect_to @blog_post, alert: "You are not authorized to edit this post", status: :unauthorized
+        end
     end
 
     def update
