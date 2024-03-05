@@ -11,6 +11,22 @@
         <%= form.label :title %>
         <%= form.text_field :title %>
     </div>
+
+    <% if blog_post.cover_image.present? %>
+        <div id="<%= dom_id(blog_post, :cover_image) %>" class="flex items-center">
+            <%= image_tag blog_post.cover_image, class: "w-1/4" %>
+            <%= link_to "remove", blog_post_cover_image_path(blog_post), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+        </div>
+    <%end%>
+
+    <div class="mb-5 flex flex-col">
+        <%= form.label :cover_image %>
+        <div>
+            <%= form.file_field :cover_image%>
+        </div>
+        
+    </div>
+
     <div  class="mb-5 flex flex-col">
         <%= form.label :content %>
         <%= form.rich_text_area :content %>
